@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+logLevel=${BUILD_LOG_LEVEL:-3}
+logFile=${BUILD_LOG_FILE}
+log(){
+    level=$1
+    message=$2
+    timestamp=$( date +"%Y/%m/%d %H:%M:%S" )
+    logMessage="$timestamp - [$level]: $message"
+    if [ -z $BUILD_LOG_FILE ];
+    then
+        echo $logMessage
+    else
+        echo $logMessage
+        echo $logMessage >> $BUILD_LOG_FILE
+    fi
+}
+
+logInfo(){
+    if [ $logLevel -ge 1 ];
+    then
+        log "INFO" "$1"
+    fi
+}
+
+logError(){
+    if [ 2 -le $logLevel ];
+    then
+        log "ERROR" "$1"
+    fi
+}
+
+logWarn(){
+    if [ 3 -le $logLevel ];
+    then
+        log "WARN" "$1"
+    fi
+}
+
+logDebug(){
+    if [ 4 -le $logLevel ];
+    then
+        log "DEBUG" "$1"
+    fi
+}
+
+findPkgJson(){
+    buildDir=$1
+    find $buildDir -name package.json | grep -v node_modules
+}
+
+installNpm(){
+    if [ ! -f $HOME/.bashrc ];
+    then
+        touch $HOME/.bashrc
+        echo "export PATH=\$PATH" >> $HOME/.bashrc
+    fi
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
+    source $HOME/.bashrc
+    logDebug "Using nvm to install npm"
+    nvm install node
+}

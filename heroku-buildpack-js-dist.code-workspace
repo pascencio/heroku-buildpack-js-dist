@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"shunit2": "shellscript",
+			"compile": "shellscript",
+			"release": "shellscript",
+			"dectect": "shellscript",
+			"run": "shellscript",
+			"utils": "shellscript"
+		}
+	}
+}

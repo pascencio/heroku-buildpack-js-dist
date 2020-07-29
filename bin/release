@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+buildPackPath=$(cd "$(dirname "${0:-}")"; cd ..; pwd)
+source $buildPackPath/lib/utils
+logInfo "Distribuition created successfully"

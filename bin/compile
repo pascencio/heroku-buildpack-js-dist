@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+buildPackPath=$(cd "$(dirname "${0:-}")"; cd ..; pwd)
+source $buildPackPath/lib/utils
+buildDir=$1
+buildCommand=${BUILDPACK_COMMAND:-"npm run build"}
+if [ ! -d $buildDir ];
+then
+    logError "Build dir not exists"
+    exit 1
+fi
+logDebug "Procesing 'compile' stage in build directory '$buildDir'"
+pkgJson=$( findPkgJson $buildDir )
+pkgJsonDirectory=$( dirname $pkgJson )
+if [ $pkgJsonDirectory != $buildDir ];
+then
+    logWarn "File package.json founded in '$pkgJsonDirectory' directory"
+fi
+logInfo "Installing npm in '$HOME' directory"
+installNpm
+logInfo "Building project using '$buildCommand' command in '$pkgJsonDirectory' directory"
+distDir=${BUILDPACK_DIST:-dist}
+targetDistDir="/tmp"
+cd $pkgJsonDirectory
+$buildCommand
+logInfo "Copying distribution directory '$distDir' in '$targetDistDir'"
+cp -R $distDir $targetDistDir

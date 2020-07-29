@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+assertFileContains(){
+    file=$1
+    match=$2
+    if [ ! -f $file ];
+    then
+        fail "File $file not exists!"
+    fi
+    grep -q -F $match $file
+    if [ "0" != "$?" ];
+    then
+        fail "Expected value: $match"
+    fi
+}

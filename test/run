@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+FAKE_HOME=/tmp/fake
+currentDir=$( pwd )
+currentHome=$HOME
+setUp(){
+    export BUILD_LOG_LEVEL=4
+    export BUILD_LOG_FILE=out.log
+    export HOME=$FAKE_HOME
+    mkdir -p $FAKE_HOME
+    cd ..
+}
+
+tearDown(){
+    if [ -f $BUILD_LOG_FILE ];
+    then
+        rm -f $BUILD_LOG_FILE
+    fi
+    if [ -d $FAKE_HOME ];
+    then
+        rm -rf $FAKE_HOME
+        export HOME=$currentHome
+    fi
+    if [ -d /tmp/dist ];
+    then
+        rm -rf /tmp/dist
+    fi
+    cd $currentDir
+}
+
+testNodeProject(){
+    buildDir=test/unit-fixtures/node-project
+    bin/detect $buildDir
+    assertFileContains $BUILD_LOG_FILE "Node.js"
+}
+
+testNotNodeProject(){
+    buildDir=test/unit-fixtures/not-node
+    bin/detect $buildDir
+    assertFileContains $BUILD_LOG_FILE "ERROR"
+}
+
+testCompileNodeProject(){
+    buildDir=test/unit-fixtures/node-project
+    bin/compile $buildDir
+}
+
+source ./utils
+source ./shunit2

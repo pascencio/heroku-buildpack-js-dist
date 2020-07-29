@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+buildPackPath=$(cd "$(dirname "${0:-}")"; cd ..; pwd)
+source $buildPackPath/lib/utils
+buildDir=$1
+if [ ! -d $buildDir ];
+then
+    logError "Build dir not exists"
+    exit 1
+fi
+pkgJson=$( findPkgJson $buildDir )
+logDebug "File founded in '$buildDir': '$pkgJson'"
+if [ -z $pkgJson ]
+then
+    logError "This project don't have any package.json file"
+    exit 1
+fi
+if [ -f $pkgJson ];
+then
+    logInfo "Node.js"
+    exit 0
+fi
+logWarn "Unexpected result looking package.json in $buildDir"
+exit 1
