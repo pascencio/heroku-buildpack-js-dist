@@ -19,7 +19,7 @@ logInfo "Installing npm in '$HOME' directory"
 installNpm
 logInfo "Building project using '$buildCommand' command in '$pkgJsonDirectory' directory"
 distDir=${BUILDPACK_DIST:-dist}
-targetDistDir="/tmp"
+targetDistDir="/app"
 cd $pkgJsonDirectory
 npm install
 $buildCommand
