@@ -21,6 +21,7 @@ logInfo "Building project using '$buildCommand' command in '$pkgJsonDirectory' d
 distDir=${BUILDPACK_DIST:-dist}
 targetDistDir="/tmp"
 cd $pkgJsonDirectory
+npm install
 $buildCommand
 logInfo "Copying distribution directory '$distDir' in '$targetDistDir'"
 cp -R $distDir $targetDistDir
