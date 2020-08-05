@@ -20,15 +20,14 @@ installNpm
 logInfo "Building project using '$buildCommand' command in '$pkgJsonDirectory' directory"
 cd $pkgJsonDirectory
 distDir=${BUILDPACK_DIST:-dist}
-targetDistDir=$buildDir/$distDir
+targetDistDir=/$distDir
 npmInstallPackages
 $buildCommand
-if [ -d $targetDistDir ];
+if [ ! -d $targetDistDir ];
 then
-    logWarn "Distribution directory already exists in '$targetDistDir'"
-else
     logDebug "Distribution directory '$targetDistDir' not exists"
-    mkdir -p $targetDistDir
-    logInfo "Copying distribution directory '$distDir' in '$targetDistDir'"
-    cp -R $distDir $targetDistDir
+    logInfo "Copying distribution directory '$distDir' in '$buildDir'"
+    cp -R $distDir $buildDir
+else
+    logWarn "Distribution directory already exists in '$targetDistDir'"
 fi
