@@ -7,3 +7,4 @@
 2020/08/04 23:14:31 - [WARN]: Distribution directory already exists in '/home/patricio/Personal/github/heroku-buildpack-js-dist/test/unit-fixtures/node-submodule/dist'
 2020/08/04 23:16:11 - [WARN]: Distribution directory already exists in '/home/patricio/Personal/github/heroku-buildpack-js-dist/test/unit-fixtures/node-submodule/dist'
 2020/08/04 23:17:32 - [WARN]: Distribution directory already exists in '/home/patricio/Personal/github/heroku-buildpack-js-dist/test/unit-fixtures/node-submodule/dist'
+2020/08/04 23:27:56 - [WARN]: Distribution directory already exists in '/home/patricio/Personal/github/heroku-buildpack-js-dist/test/unit-fixtures/node-submodule/dist'
