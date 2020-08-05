@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 FAKE_HOME=/tmp/fake
-currentDir=$( pwd )
+testDir=$( pwd )
 currentHome=$HOME
 setUp(){
     export BUILD_LOG_LEVEL=4
@@ -24,24 +24,31 @@ tearDown(){
     then
         rm -rf /tmp/dist
     fi
-    cd $currentDir
+    cd $testDir
 }
 
-testNodeProject(){
-    buildDir=test/unit-fixtures/node-project
+testDetectProject(){
+    buildDir=$testDir/unit-fixtures/node-project
     bin/detect $buildDir
     assertFileContains $BUILD_LOG_FILE "Node.js"
 }
 
-testNotNodeProject(){
-    buildDir=test/unit-fixtures/not-node
+testNoDetectProject(){
+    buildDir=$testDir/unit-fixtures/not-node
     bin/detect $buildDir
     assertFileContains $BUILD_LOG_FILE "ERROR"
 }
 
-testCompileNodeProject(){
-    buildDir=test/unit-fixtures/node-project
+testCompileProject(){
+    buildDir=$testDir/unit-fixtures/node-project
     bin/compile $buildDir
+    assertDirectoryExists $buildDir/dist
+}
+
+testCompileSubmoduleProject(){
+    buildDir=$testDir/unit-fixtures/node-submodule
+    bin/compile $buildDir
+    assertDirectoryExists $buildDir/dist
 }
 
 source ./utils

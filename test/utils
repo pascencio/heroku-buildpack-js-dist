@@ -1,11 +1,22 @@
 #!/usr/bin/env bash
-assertFileContains(){
+assertDirectoryExists(){
+    dir=$1
+    if [ ! -d $dir ];
+    then
+        fail "Directory $dir not exists!"
+    fi
+}
+assertFileExists(){
     file=$1
-    match=$2
     if [ ! -f $file ];
     then
         fail "File $file not exists!"
     fi
+}
+assertFileContains(){
+    file=$1
+    match=$2
+    assertFileExists $file
     grep -q -F $match $file
     if [ "0" != "$?" ];
     then

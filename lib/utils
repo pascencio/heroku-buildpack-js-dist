@@ -54,9 +54,13 @@ installNpm(){
         touch $HOME/.bashrc
         echo "export PATH=\$PATH" >> $HOME/.bashrc
     fi
-    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
+    curl -s -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash > /dev/null 2>&1
     export NVM_DIR="$HOME/.nvm"
     [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
     logDebug "Using nvm to install npm"
     nvm install node
+}
+
+npmInstallPackages(){
+    npm install --silent
 }
