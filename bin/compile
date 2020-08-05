@@ -2,7 +2,7 @@
 buildPackPath=$(cd "$(dirname "${0:-}")"; cd ..; pwd)
 source $buildPackPath/lib/utils
 buildDir=$1
-buildCommand=${BUILDPACK_COMMAND:-"npm run silent build"}
+buildCommand=${BUILDPACK_COMMAND:-"npm run build"}
 if [ ! -d $buildDir ];
 then
     logError "Build dir not exists"
