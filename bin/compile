@@ -3,7 +3,7 @@ buildPackPath=$(cd "$(dirname "${0:-}")"; cd ..; pwd)
 source $buildPackPath/lib/utils
 buildDir=$1
 profileDir=$buildDir/.profile.d
-profileScript=${profileDir}/dist-js.sh
+profileScript=$profileDir/js-dist.sh
 buildCommand=${BUILDPACK_COMMAND:-"npm run build"}
 if [ ! -d $buildDir ];
 then
@@ -21,12 +21,12 @@ logInfo "Installing npm in '$HOME' directory"
 installNpm
 logInfo "Building project using '$buildCommand' command in '$pkgJsonDirectory' directory"
 distDir=${BUILDPACK_DIST:-dist}
-targetDistDir="${buildDir}/${distDir}"
+targetDistDir="$buildDir/$distDir"
 cd $pkgJsonDirectory
 npm install
 $buildCommand
 logInfo "Copying distribution directory '$distDir' in '$targetDistDir'"
 cp -R $distDir $targetDistDir
 mkdir -p $profileDir
-logInfo "Creating  '$profileScript' script with 'DIST_JS_DIR' environment variable"
-echo "export DIST_JS_DIR=${targetDistDir}" > $profileScript
+logInfo "Creating  '$profileScript' script with 'JS_DIST_DIR' environment variable with '$targetDistDir' value"
+echo "export JS_DIST_DIR=$targetDistDir" > $profileScript
